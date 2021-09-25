@@ -140,6 +140,7 @@ GameObject:
   - component: {fileID: 2833223566710539581}
   - component: {fileID: 438405464417104207}
   - component: {fileID: 7554297663485776687}
+  - component: {fileID: 4556548711908606613}
   m_Layer: 0
   m_Name: PlayerBody
   m_TagString: Untagged
@@ -237,7 +238,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   playerControls: {fileID: -944628639613478452, guid: 8b988d9da5e70004493dc1693240ebb5, type: 3}
-  m_JumpStrength: 0
+  m_JumpStrength: 500
 --- !u!114 &7554297663485776687
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -320,6 +321,22 @@ MonoBehaviour:
   m_DefaultActionMap: Player
   m_SplitScreenIndex: -1
   m_Camera: {fileID: 0}
+--- !u!54 &4556548711908606613
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4005449123676999493}
+  serializedVersion: 2
+  m_Mass: 1
+  m_Drag: 0
+  m_AngularDrag: 0.05
+  m_UseGravity: 1
+  m_IsKinematic: 0
+  m_Interpolate: 0
+  m_Constraints: 0
+  m_CollisionDetection: 0
 --- !u!1 &5440890121946556984
 GameObject:
   m_ObjectHideFlags: 0
