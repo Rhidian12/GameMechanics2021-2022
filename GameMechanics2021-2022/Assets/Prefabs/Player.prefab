@@ -138,6 +138,8 @@ GameObject:
   - component: {fileID: 8441597821332143480}
   - component: {fileID: 1280682350137924618}
   - component: {fileID: 2833223566710539581}
+  - component: {fileID: 438405464417104207}
+  - component: {fileID: 7554297663485776687}
   m_Layer: 0
   m_Name: PlayerBody
   m_TagString: Untagged
@@ -222,51 +224,34 @@ CapsuleCollider:
   m_Height: 2
   m_Direction: 1
   m_Center: {x: 0, y: 0, z: 0}
---- !u!1 &5173848601312063554
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 1955137860655430195}
-  - component: {fileID: 2475095303178729728}
-  m_Layer: 0
-  m_Name: Input
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &1955137860655430195
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5173848601312063554}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
-  m_Father: {fileID: 8587318017033670024}
-  m_RootOrder: 3
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &2475095303178729728
+--- !u!114 &438405464417104207
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5173848601312063554}
+  m_GameObject: {fileID: 4005449123676999493}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ac08f49921a7b8248afc0897b49baa25, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  playerControls: {fileID: -944628639613478452, guid: 8b988d9da5e70004493dc1693240ebb5, type: 3}
+  m_JumpStrength: 0
+--- !u!114 &7554297663485776687
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4005449123676999493}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 62899f850307741f2a39c98a8b639597, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   m_Actions: {fileID: -944628639613478452, guid: 8b988d9da5e70004493dc1693240ebb5, type: 3}
-  m_NotificationBehavior: 0
+  m_NotificationBehavior: 2
   m_UIInputModule: {fileID: 0}
   m_DeviceLostEvent:
     m_PersistentCalls:
@@ -279,22 +264,6 @@ MonoBehaviour:
       m_Calls: []
   m_ActionEvents:
   - m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 11500000, guid: ac08f49921a7b8248afc0897b49baa25, type: 3}
-        m_TargetAssemblyTypeName: 
-        m_MethodName: 
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: 
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 1
-    m_ActionId: 1f4bf866-38d7-4183-9e52-d5987aed95f5
-    m_ActionName: Player/Move[/Keyboard/w,/Keyboard/upArrow,/Keyboard/s,/Keyboard/downArrow,/Keyboard/a,/Keyboard/leftArrow,/Keyboard/d,/Keyboard/rightArrow]
-  - m_PersistentCalls:
       m_Calls: []
     m_ActionId: 88d8e038-d942-41b0-b634-16d54122eaa0
     m_ActionName: Player/Look[/Mouse/delta]
@@ -302,6 +271,10 @@ MonoBehaviour:
       m_Calls: []
     m_ActionId: ba724825-dd63-419f-8dc7-3a1c4da15f13
     m_ActionName: Player/Fire[/Mouse/leftButton]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: 0b81f456-bece-40b6-b71b-4980e50b38b4
+    m_ActionName: Player/Movement[/Keyboard/space]
   - m_PersistentCalls:
       m_Calls: []
     m_ActionId: 772a9895-515c-4db8-bb74-4e3171d09850
@@ -377,7 +350,6 @@ Transform:
   - {fileID: 6494130294545745137}
   - {fileID: 8327099252858709705}
   - {fileID: 2289199030695212513}
-  - {fileID: 1955137860655430195}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}

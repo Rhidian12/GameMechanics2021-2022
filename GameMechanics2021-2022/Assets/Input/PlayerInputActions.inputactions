@@ -57,7 +57,7 @@
                     "name": "",
                     "id": "733d95b9-4978-468a-a4e5-a701806693c7",
                     "path": "<Keyboard>/space",
-                    "interactions": "Tap",
+                    "interactions": "",
                     "processors": "",
                     "groups": "Keyboard&Mouse",
                     "action": "Movement",
