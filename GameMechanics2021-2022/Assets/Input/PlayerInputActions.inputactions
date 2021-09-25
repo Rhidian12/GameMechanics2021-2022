@@ -28,6 +28,14 @@
                     "expectedControlType": "Button",
                     "processors": "",
                     "interactions": ""
+                },
+                {
+                    "name": "Jump",
+                    "type": "Button",
+                    "id": "c29e9273-e866-4454-9b1a-8da598eb4275",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": ""
                 }
             ],
             "bindings": [
@@ -55,9 +63,9 @@
                 },
                 {
                     "name": "",
-                    "id": "733d95b9-4978-468a-a4e5-a701806693c7",
-                    "path": "<Keyboard>/space",
-                    "interactions": "",
+                    "id": "1764f582-fe78-4f7d-bb28-63186c28bb67",
+                    "path": "<Keyboard>/w",
+                    "interactions": "Hold",
                     "processors": "",
                     "groups": "Keyboard&Mouse",
                     "action": "Movement",
@@ -66,12 +74,45 @@
                 },
                 {
                     "name": "",
-                    "id": "1764f582-fe78-4f7d-bb28-63186c28bb67",
-                    "path": "<Keyboard>/w",
-                    "interactions": "",
+                    "id": "935c49ed-4372-49a3-97ec-4b24ebaa759b",
+                    "path": "<Keyboard>/a",
+                    "interactions": "Hold",
                     "processors": "",
                     "groups": "Keyboard&Mouse",
                     "action": "Movement",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "3159bd0f-fd17-41e1-8a12-01e9f5aacbb1",
+                    "path": "<Keyboard>/s",
+                    "interactions": "Hold",
+                    "processors": "",
+                    "groups": "Keyboard&Mouse",
+                    "action": "Movement",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "c8707efc-ba71-4a56-9253-adce4fa66a81",
+                    "path": "<Keyboard>/d",
+                    "interactions": "Hold",
+                    "processors": "",
+                    "groups": "Keyboard&Mouse",
+                    "action": "Movement",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "50dce805-a775-46bb-9aa5-e258f6f1cfc9",
+                    "path": "<Keyboard>/space",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Keyboard&Mouse",
+                    "action": "Jump",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }

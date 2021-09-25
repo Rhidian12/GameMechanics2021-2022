@@ -8,10 +8,13 @@ public class PlayerMovement : MonoBehaviour
     public InputActionAsset playerControls;
 
     [SerializeField] private float m_JumpStrength;
+    [SerializeField] private float m_Speed;
+
     private Vector3 m_Direction;
     private Rigidbody m_RigidBody;
 
     private InputAction m_Movement;
+    private InputAction m_Jump;
 
     private void Awake()
     {
@@ -20,14 +23,12 @@ public class PlayerMovement : MonoBehaviour
         var playerActionMap = playerControls.FindActionMap("Player");
 
         m_Movement = playerActionMap.FindAction("Movement");
-        m_Movement.performed += OnMovement;
+        m_Movement.started += OnMovement;
         m_Movement.Enable();
-    }
 
-    // Update is called once per frame
-    void Update()
-    {
-
+        m_Jump = playerActionMap.FindAction("Jump");
+        m_Jump.performed += OnJump;
+        m_Jump.Enable();
     }
 
     private void FixedUpdate()
@@ -39,20 +40,36 @@ public class PlayerMovement : MonoBehaviour
         if (m_Direction.y < 0f)
             m_Direction.y = 0f;
 
-        Debug.Log(m_Direction);
+        //Debug.Log(m_Direction);
     }
 
     private void OnMovement(InputAction.CallbackContext context)
     {
-        if (context.control.name.Equals("space"))
-        {
-            Debug.Log("Jump!");
-            m_Direction.y += m_JumpStrength * Time.deltaTime;
-        }
-        else if (context.control.name.Equals("w"))
+        if (context.control.name.Equals("w"))
         {
             Debug.Log("Forward!");
-            m_Direction.z += 50f * Time.deltaTime;
+            m_Direction.z += m_Speed * Time.deltaTime;
         }
+        else if (context.control.name.Equals("d"))
+        {
+            Debug.Log("Right!");
+            m_Direction.x += m_Speed * Time.deltaTime;
+        }
+        else if (context.control.name.Equals("s"))
+        {
+            Debug.Log("Backwards!");
+            m_Direction.z -= m_Speed * Time.deltaTime;
+        }
+        else if (context.control.name.Equals("a"))
+        {
+            Debug.Log("Left!");
+            m_Direction.x -= m_Speed * Time.deltaTime;
+        }
+    }
+
+    private void OnJump(InputAction.CallbackContext context)
+    {
+        Debug.Log("Jump!");
+        m_Direction.y += m_JumpStrength * Time.deltaTime;
     }
 }
