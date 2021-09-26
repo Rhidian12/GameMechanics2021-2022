@@ -10,7 +10,6 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] private float m_JumpStrength;
     [SerializeField] private float m_Speed;
 
-    private Vector3 m_Direction;
     private Rigidbody m_RigidBody;
 
     private InputAction m_Movement;
@@ -31,45 +30,38 @@ public class PlayerMovement : MonoBehaviour
         m_Jump.Enable();
     }
 
-    private void FixedUpdate()
-    {
-        m_RigidBody.MovePosition(m_Direction);
-
-        m_Direction += Physics.gravity * Time.deltaTime;
-
-        if (m_Direction.y < 0f)
-            m_Direction.y = 0f;
-
-        //Debug.Log(m_Direction);
-    }
-
     private void OnMovement(InputAction.CallbackContext context)
     {
         if (context.control.name.Equals("w"))
         {
             Debug.Log("Forward!");
-            m_Direction.z += m_Speed * Time.deltaTime;
+            Vector3 direction = new Vector3(0f, 0f, m_Speed);
+            m_RigidBody.AddForce(direction, ForceMode.VelocityChange);
         }
         else if (context.control.name.Equals("d"))
         {
             Debug.Log("Right!");
-            m_Direction.x += m_Speed * Time.deltaTime;
+            Vector3 direction = new Vector3(m_Speed, 0f, 0f);
+            m_RigidBody.AddForce(direction, ForceMode.VelocityChange);
         }
         else if (context.control.name.Equals("s"))
         {
             Debug.Log("Backwards!");
-            m_Direction.z -= m_Speed * Time.deltaTime;
+            Vector3 direction = new Vector3(0f, 0f, -m_Speed);
+            m_RigidBody.AddForce(direction, ForceMode.VelocityChange);
         }
         else if (context.control.name.Equals("a"))
         {
             Debug.Log("Left!");
-            m_Direction.x -= m_Speed * Time.deltaTime;
+            Vector3 direction = new Vector3(-m_Speed, 0f, 0f);
+            m_RigidBody.AddForce(direction, ForceMode.VelocityChange);
         }
     }
 
     private void OnJump(InputAction.CallbackContext context)
     {
         Debug.Log("Jump!");
-        m_Direction.y += m_JumpStrength * Time.deltaTime;
+        Vector3 direction = new Vector3(0f, m_JumpStrength, 0f);
+        m_RigidBody.AddForce(direction, ForceMode.VelocityChange);
     }
 }
