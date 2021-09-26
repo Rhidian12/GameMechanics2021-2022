@@ -5,63 +5,44 @@ using UnityEngine.InputSystem;
 
 public class PlayerMovement : MonoBehaviour
 {
-    public InputActionAsset playerControls;
-
     [SerializeField] private float m_JumpStrength;
     [SerializeField] private float m_Speed;
 
     private Rigidbody m_RigidBody;
 
-    private InputAction m_Movement;
-    private InputAction m_Jump;
-
     private void Awake()
     {
         m_RigidBody = gameObject.GetComponent<Rigidbody>();
-
-        var playerActionMap = playerControls.FindActionMap("Player");
-
-        m_Movement = playerActionMap.FindAction("Movement");
-        m_Movement.started += OnMovement;
-        m_Movement.Enable();
-
-        m_Jump = playerActionMap.FindAction("Jump");
-        m_Jump.performed += OnJump;
-        m_Jump.Enable();
     }
 
-    private void OnMovement(InputAction.CallbackContext context)
+    private void Update()
     {
-        if (context.control.name.Equals("w"))
-        {
-            Debug.Log("Forward!");
-            Vector3 direction = new Vector3(0f, 0f, m_Speed);
-            m_RigidBody.AddForce(direction, ForceMode.VelocityChange);
-        }
-        else if (context.control.name.Equals("d"))
-        {
-            Debug.Log("Right!");
-            Vector3 direction = new Vector3(m_Speed, 0f, 0f);
-            m_RigidBody.AddForce(direction, ForceMode.VelocityChange);
-        }
-        else if (context.control.name.Equals("s"))
-        {
-            Debug.Log("Backwards!");
-            Vector3 direction = new Vector3(0f, 0f, -m_Speed);
-            m_RigidBody.AddForce(direction, ForceMode.VelocityChange);
-        }
-        else if (context.control.name.Equals("a"))
-        {
-            Debug.Log("Left!");
-            Vector3 direction = new Vector3(-m_Speed, 0f, 0f);
-            m_RigidBody.AddForce(direction, ForceMode.VelocityChange);
-        }
+        HandleMovement();
     }
 
-    private void OnJump(InputAction.CallbackContext context)
+    private void FixedUpdate()
     {
-        Debug.Log("Jump!");
-        Vector3 direction = new Vector3(0f, m_JumpStrength, 0f);
-        m_RigidBody.AddForce(direction, ForceMode.VelocityChange);
+        m_RigidBody.velocity.Set(
+            Mathf.Clamp(m_RigidBody.velocity.x, -m_Speed, m_Speed),
+            Mathf.Clamp(m_RigidBody.velocity.y, -m_JumpStrength, m_JumpStrength),
+            Mathf.Clamp(m_RigidBody.velocity.z, -m_Speed, m_Speed));
+
+        Debug.Log(m_RigidBody.velocity);
+    }
+
+    private void HandleMovement()
+    {
+        var currentInput = Keyboard.current;
+        if (currentInput == null)
+            return;
+
+        if (currentInput.wKey.isPressed)
+            m_RigidBody.velocity += new Vector3(0f, 0f, m_Speed * Time.deltaTime);
+        else if (currentInput.dKey.isPressed)
+            m_RigidBody.velocity += new Vector3(m_Speed * Time.deltaTime, 0f, 0f);
+        else if (currentInput.sKey.isPressed)
+            m_RigidBody.velocity += new Vector3(0f, 0f, -m_Speed * Time.deltaTime);
+        else if (currentInput.aKey.isPressed)
+            m_RigidBody.velocity += new Vector3(-m_Speed * Time.deltaTime, 0f, 0f);
     }
 }
