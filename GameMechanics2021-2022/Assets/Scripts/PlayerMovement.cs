@@ -36,13 +36,18 @@ public class PlayerMovement : MonoBehaviour
         if (currentInput == null)
             return;
 
+        Vector3 newVelocity = Vector3.zero;
+        newVelocity.y = m_RigidBody.velocity.y;
+
         if (currentInput.wKey.isPressed)
-            m_RigidBody.velocity += new Vector3(0f, 0f, m_Speed * Time.deltaTime);
-        else if (currentInput.dKey.isPressed)
-            m_RigidBody.velocity += new Vector3(m_Speed * Time.deltaTime, 0f, 0f);
-        else if (currentInput.sKey.isPressed)
-            m_RigidBody.velocity += new Vector3(0f, 0f, -m_Speed * Time.deltaTime);
-        else if (currentInput.aKey.isPressed)
-            m_RigidBody.velocity += new Vector3(-m_Speed * Time.deltaTime, 0f, 0f);
+            newVelocity += new Vector3(0f, 0f, m_Speed * Time.deltaTime);
+        if (currentInput.dKey.isPressed)
+            newVelocity += new Vector3(m_Speed * Time.deltaTime, 0f, 0f);
+        if (currentInput.sKey.isPressed)
+            newVelocity += new Vector3(0f, 0f, -m_Speed * Time.deltaTime);
+        if (currentInput.aKey.isPressed)
+            newVelocity += new Vector3(-m_Speed * Time.deltaTime, 0f, 0f);
+
+        m_RigidBody.velocity = newVelocity;
     }
 }
