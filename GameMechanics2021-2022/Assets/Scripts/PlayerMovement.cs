@@ -5,9 +5,9 @@ using UnityEngine.InputSystem;
 
 public class PlayerMovement : MonoBehaviour
 {
-    [SerializeField] private float m_JumpStrength;
     [SerializeField] private float m_Speed;
 
+    private Vector3 m_DesiredVelocity;
     private Rigidbody m_RigidBody;
 
     private void Awake()
@@ -17,44 +17,37 @@ public class PlayerMovement : MonoBehaviour
 
     private void Update()
     {
-        HandleMovement();
+        HandleInput();
     }
 
     private void FixedUpdate()
     {
-        m_RigidBody.velocity.Set(
-            Mathf.Clamp(m_RigidBody.velocity.x, -m_Speed, m_Speed),
-            Mathf.Clamp(m_RigidBody.velocity.y, -m_JumpStrength, m_JumpStrength),
-            Mathf.Clamp(m_RigidBody.velocity.z, -m_Speed, m_Speed));
+        Vector3 newVelocity = Vector3.zero;
+        newVelocity += m_DesiredVelocity;
+        newVelocity *= m_Speed * Time.fixedDeltaTime;
+        newVelocity.y = m_RigidBody.velocity.y;
 
-        Debug.Log(m_RigidBody.velocity);
+        m_RigidBody.velocity = newVelocity;
     }
 
-    private void HandleMovement()
+    private void HandleInput()
     {
         var currentInput = Keyboard.current;
         if (currentInput == null)
             return;
 
-        Vector3 newVelocity = Vector3.zero;
-        newVelocity.y = m_RigidBody.velocity.y;
+        m_DesiredVelocity = Vector3.zero;
 
         if (currentInput.wKey.isPressed)
-            newVelocity += new Vector3(0f, 0f, m_Speed * Time.deltaTime);
+            m_DesiredVelocity += Vector3.forward;
 
         if (currentInput.dKey.isPressed)
-            newVelocity += new Vector3(m_Speed * Time.deltaTime, 0f, 0f);
+            m_DesiredVelocity += Vector3.right;
 
         if (currentInput.sKey.isPressed)
-            newVelocity += new Vector3(0f, 0f, -m_Speed * Time.deltaTime);
+            m_DesiredVelocity += Vector3.back;
 
         if (currentInput.aKey.isPressed)
-            newVelocity += new Vector3(-m_Speed * Time.deltaTime, 0f, 0f);
-
-        if (currentInput.spaceKey.isPressed)
-            if (Physics.Raycast(new Ray(m_RigidBody.position, new Vector3(0f, -1f))))
-                newVelocity += new Vector3(0f, m_JumpStrength * Time.deltaTime, 0f);
-
-        m_RigidBody.velocity = newVelocity;
+            m_DesiredVelocity += Vector3.left;
     }
 }
