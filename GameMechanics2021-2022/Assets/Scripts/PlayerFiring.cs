@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.InputSystem.Controls;
 
 public class PlayerFiring : MonoBehaviour
 {
@@ -9,12 +10,6 @@ public class PlayerFiring : MonoBehaviour
     [SerializeField] private GameObject m_BulletPrefab;
 
     private bool m_IsFiring;
-
-    // Start is called before the first frame update
-    void Start()
-    {
-
-    }
 
     // Update is called once per frame
     void Update()
@@ -38,7 +33,7 @@ public class PlayerFiring : MonoBehaviour
         if (m_IsFiring)
         {
             GameObject bullet = Instantiate(m_BulletPrefab, m_BulletSpawnPoint.position, Quaternion.identity);
-            bullet.GetComponentInChildren<BulletMovement>().Velocity = transform.parent.transform.parent.transform.forward;
+            bullet.GetComponentInChildren<BulletMovement>().Velocity = m_BulletSpawnPoint.forward;
         }
     }
 }
