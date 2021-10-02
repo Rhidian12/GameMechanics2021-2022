@@ -5,8 +5,8 @@ using UnityEngine.InputSystem;
 
 public class PlayerFiring : MonoBehaviour
 {
-    public Transform m_BulletSpawnPoint;
-    public GameObject m_BulletPrefab;
+    [SerializeField] private Transform m_BulletSpawnPoint;
+    [SerializeField] private GameObject m_BulletPrefab;
 
     private bool m_IsFiring;
 
