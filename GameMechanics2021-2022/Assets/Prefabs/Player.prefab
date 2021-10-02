@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 5696765371749959177}
   - component: {fileID: 3602905743918176520}
   - component: {fileID: 6452617386575847205}
+  - component: {fileID: 7220470998055856967}
   m_Layer: 0
   m_Name: Gun
   m_TagString: Untagged
@@ -96,6 +97,20 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &7220470998055856967
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2260837951219054443}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 176439c382ab57742842c6defec6cabc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_BulletSpawnPoint: {fileID: 5148950467898458504}
+  m_BulletPrefab: {fileID: 8389657555116668965, guid: 36d1a667bad334a49aa97dade07d05a1, type: 3}
 --- !u!1 &2454859478849864316
 GameObject:
   m_ObjectHideFlags: 0
@@ -224,8 +239,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ac08f49921a7b8248afc0897b49baa25, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playerControls: {fileID: -944628639613478452, guid: 8b988d9da5e70004493dc1693240ebb5, type: 3}
-  m_JumpStrength: 50
   m_Speed: 50
 --- !u!54 &4556548711908606613
 Rigidbody:
