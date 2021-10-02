@@ -25,8 +25,12 @@ public class BulletMovement : MonoBehaviour
     void Start()
     {
         m_Rigidbody = gameObject.GetComponent<Rigidbody>();
+    }
 
-        m_Velocity = Vector3.zero;
+    private void OnCollisionEnter(Collision collision)
+    {
+        if (collision.gameObject.tag != "Bullet")
+            Destroy(gameObject.transform.parent.gameObject);
     }
 
     void FixedUpdate()

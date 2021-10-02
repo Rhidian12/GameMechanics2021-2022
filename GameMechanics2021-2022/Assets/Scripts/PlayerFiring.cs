@@ -30,17 +30,15 @@ public class PlayerFiring : MonoBehaviour
         if (currentInput == null)
             return;
         else // I should read branch prediction again
-            m_IsFiring = currentInput.leftButton.isPressed;
+            m_IsFiring = currentInput.leftButton.wasReleasedThisFrame;
     }
 
     private void Fire()
     {
-        if (!m_IsFiring)
-            return;
-        else
+        if (m_IsFiring)
         {
-            GameObject bullet = GameObject.Instantiate(m_BulletPrefab, m_BulletSpawnPoint.position, Quaternion.identity);
-            bullet.GetComponent<BulletMovement>().Velocity = transform.forward;
+            GameObject bullet = Instantiate(m_BulletPrefab, m_BulletSpawnPoint.position, Quaternion.identity);
+            bullet.GetComponentInChildren<BulletMovement>().Velocity = transform.parent.transform.parent.transform.forward;
         }
     }
 }
