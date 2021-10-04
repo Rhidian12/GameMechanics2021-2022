@@ -1,8 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.InputSystem;
-using UnityEngine.InputSystem.Controls;
 
 public class PlayerFiring : MonoBehaviour
 {
@@ -21,11 +19,11 @@ public class PlayerFiring : MonoBehaviour
 
     private void HandleInput()
     {
-        var currentInput = Mouse.current;
-        if (currentInput == null)
-            return;
-        else // I should read branch prediction again
-            m_IsFiring = currentInput.leftButton.wasReleasedThisFrame;
+        //var currentInput = Mouse.current;
+        //if (currentInput == null)
+        //    return;
+        //else // I should read branch prediction again
+        //    m_IsFiring = currentInput.leftButton.wasReleasedThisFrame;
     }
 
     private void Fire()

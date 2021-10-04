@@ -1,39 +1,37 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.InputSystem;
 
 public class PlayerAim : MonoBehaviour
 {
     [SerializeField] private Camera m_Camera;
 
-    private Vector2 m_MousePosition;
-    private Vector2 m_CurrentRotation;
+    private float m_CameraVerticalAngle;
+    private Transform m_PlayerTransform;
 
-    // Update is called once per frame
+    private string m_MouseX = "MouseX";
+    private string m_MouseY = "MouseY";
+
+    private void Awake()
+    {
+        m_PlayerTransform = gameObject.transform.parent.transform;
+
+        Cursor.lockState = CursorLockMode.Locked;
+    }
+
     void Update()
     {
-        HandleInput();
-    }
+        const float maxVerticalAngle = 89f;
+        const float rotationSpeed = 200f;
 
-    void FixedUpdate()
-    {
-        // Calculate rotation based on mouse position
-        m_CurrentRotation.x += m_MousePosition.x;
-        m_CurrentRotation.y -= m_MousePosition.y;
+        // Rotate the Root of the player over its local Y axis
+        m_PlayerTransform.transform.Rotate(0f, Input.GetAxisRaw(m_MouseX) * rotationSpeed * 0.01f, 0f, Space.Self);
 
-        m_CurrentRotation.x = Mathf.Repeat(m_CurrentRotation.x, 360);
-        m_CurrentRotation.y = Mathf.Clamp(m_CurrentRotation.y, -80f, 80f);
+        // Increase the Vertical Camera Angle
+        m_CameraVerticalAngle += Input.GetAxisRaw(m_MouseY) * -1f * 0.01f * rotationSpeed;
+        m_CameraVerticalAngle = Mathf.Clamp(m_CameraVerticalAngle, -maxVerticalAngle, maxVerticalAngle);
 
-        m_Camera.transform.rotation = Quaternion.Euler(m_CurrentRotation.y, m_CurrentRotation.x, 0);
-
-        //Cursor.lockState = CursorLockMode.Locked;
-    }
-
-    private void HandleInput()
-    {
-        var currentInput = Mouse.current;
-        if (currentInput != null)
-            m_MousePosition = currentInput.position.ReadValue();
+        // Set the Camera its local X angle
+        m_Camera.transform.localEulerAngles = new Vector3(m_CameraVerticalAngle, 0f, 0f);
     }
 }

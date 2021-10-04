@@ -1,7 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.InputSystem;
+//using UnityEngine.InputSystem;
 
 public class PlayerMovement : MonoBehaviour
 {
@@ -10,9 +10,12 @@ public class PlayerMovement : MonoBehaviour
     private Vector3 m_DesiredVelocity;
     private Rigidbody m_RigidBody;
 
+    private string m_HorizontalKeyboardAxis = "KeyboardHorizontal";
+    private string m_VerticalKeyboardAxis = "KeyboardVertical";
+
     private void Awake()
     {
-        m_RigidBody = gameObject.GetComponent<Rigidbody>();
+        m_RigidBody = gameObject.GetComponentInParent<Rigidbody>();
     }
 
     private void Update()
@@ -32,22 +35,9 @@ public class PlayerMovement : MonoBehaviour
 
     private void HandleInput()
     {
-        var currentInput = Keyboard.current;
-        if (currentInput == null)
-            return;
-
         m_DesiredVelocity = Vector3.zero;
 
-        if (currentInput.wKey.isPressed)
-            m_DesiredVelocity += Vector3.forward;
-
-        if (currentInput.dKey.isPressed)
-            m_DesiredVelocity += Vector3.right;
-
-        if (currentInput.sKey.isPressed)
-            m_DesiredVelocity += Vector3.back;
-
-        if (currentInput.aKey.isPressed)
-            m_DesiredVelocity += Vector3.left;
+        m_DesiredVelocity = Input.GetAxisRaw(m_HorizontalKeyboardAxis) * m_RigidBody.transform.right
+            + Input.GetAxisRaw(m_VerticalKeyboardAxis) * m_RigidBody.transform.forward;
     }
 }
