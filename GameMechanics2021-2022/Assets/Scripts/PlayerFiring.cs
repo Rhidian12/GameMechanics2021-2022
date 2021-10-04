@@ -4,31 +4,21 @@ using UnityEngine;
 
 public class PlayerFiring : MonoBehaviour
 {
+    public bool m_HasFired = false;
+
     [SerializeField] private Transform m_BulletSpawnPoint;
     [SerializeField] private GameObject m_BulletPrefab;
 
-    private bool m_IsFiring;
 
     // Update is called once per frame
     void Update()
     {
-        HandleInput();
-
         Fire();
-    }
-
-    private void HandleInput()
-    {
-        //var currentInput = Mouse.current;
-        //if (currentInput == null)
-        //    return;
-        //else // I should read branch prediction again
-        //    m_IsFiring = currentInput.leftButton.wasReleasedThisFrame;
     }
 
     private void Fire()
     {
-        if (m_IsFiring)
+        if (!m_HasFired)
         {
             GameObject bullet = Instantiate(m_BulletPrefab, m_BulletSpawnPoint.position, Quaternion.identity);
             bullet.GetComponentInChildren<BulletMovement>().Velocity = m_BulletSpawnPoint.forward;

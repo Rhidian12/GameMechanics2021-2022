@@ -123,6 +123,7 @@ GameObject:
   - component: {fileID: 117843210544406309}
   - component: {fileID: 8814373492095101645}
   - component: {fileID: 3775957555692024272}
+  - component: {fileID: 7052644823083002568}
   m_Layer: 0
   m_Name: Player
   m_TagString: Untagged
@@ -189,6 +190,21 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Speed: 500
+--- !u!114 &7052644823083002568
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5440890121946556984}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 49fffffa44964af42b28e5ea3fc44a2a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_PlayerMovementScript: {fileID: 3775957555692024272}
+  m_PlayerFiringScript: {fileID: 6843243882445671679}
+  m_PlayerAimScript: {fileID: 7764714142561630722}
 --- !u!1 &8221032489111194845
 GameObject:
   m_ObjectHideFlags: 0
@@ -286,6 +302,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 418bccc909b42ca46b1f44ee10068704, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  m_CurrentRotation: {x: 0, y: 0}
   m_Camera: {fileID: 133244409649858583}
 --- !u!1001 &3804583373583490753
 PrefabInstance:
@@ -365,3 +382,14 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 5940629824643948505, guid: 26cdf7b2eb6cd2c459e0e994e9f08b6c, type: 3}
   m_PrefabInstance: {fileID: 3804583373583490753}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &6843243882445671679 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 7652898237162394174, guid: 26cdf7b2eb6cd2c459e0e994e9f08b6c, type: 3}
+  m_PrefabInstance: {fileID: 3804583373583490753}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 176439c382ab57742842c6defec6cabc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

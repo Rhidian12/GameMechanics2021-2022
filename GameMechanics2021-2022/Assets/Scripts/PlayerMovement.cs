@@ -10,17 +10,23 @@ public class PlayerMovement : MonoBehaviour
     private Vector3 m_DesiredVelocity;
     private Rigidbody m_RigidBody;
 
-    private string m_HorizontalKeyboardAxis = "KeyboardHorizontal";
-    private string m_VerticalKeyboardAxis = "KeyboardVertical";
+    public Vector3 DesiredVelocity
+    {
+        get => m_DesiredVelocity;
+        set
+        {
+            m_DesiredVelocity = value.sqrMagnitude <= 1f ? value : value.normalized;
+        }
+    }
+
+    public Rigidbody Rigidbody
+    {
+        get => m_RigidBody;
+    }
 
     private void Awake()
     {
         m_RigidBody = gameObject.GetComponentInParent<Rigidbody>();
-    }
-
-    private void Update()
-    {
-        HandleInput();
     }
 
     private void FixedUpdate()
@@ -31,13 +37,5 @@ public class PlayerMovement : MonoBehaviour
         newVelocity.y = m_RigidBody.velocity.y;
 
         m_RigidBody.velocity = newVelocity;
-    }
-
-    private void HandleInput()
-    {
-        m_DesiredVelocity = Vector3.zero;
-
-        m_DesiredVelocity = Input.GetAxisRaw(m_HorizontalKeyboardAxis) * m_RigidBody.transform.right
-            + Input.GetAxisRaw(m_VerticalKeyboardAxis) * m_RigidBody.transform.forward;
     }
 }

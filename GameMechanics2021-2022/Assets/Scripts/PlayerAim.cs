@@ -4,13 +4,12 @@ using UnityEngine;
 
 public class PlayerAim : MonoBehaviour
 {
+    public Vector2 m_CurrentRotation;
+
     [SerializeField] private Camera m_Camera;
 
     private float m_CameraVerticalAngle;
     private Transform m_PlayerTransform;
-
-    private string m_MouseX = "MouseX";
-    private string m_MouseY = "MouseY";
 
     private void Awake()
     {
@@ -25,10 +24,10 @@ public class PlayerAim : MonoBehaviour
         const float rotationSpeed = 200f;
 
         // Rotate the Root of the player over its local Y axis
-        m_PlayerTransform.transform.Rotate(0f, Input.GetAxisRaw(m_MouseX) * rotationSpeed * 0.01f, 0f, Space.Self);
+        m_PlayerTransform.transform.Rotate(0f, m_CurrentRotation.x * rotationSpeed * 0.01f, 0f, Space.Self);
 
         // Increase the Vertical Camera Angle
-        m_CameraVerticalAngle += Input.GetAxisRaw(m_MouseY) * -1f * 0.01f * rotationSpeed;
+        m_CameraVerticalAngle += m_CurrentRotation.y * -1f * 0.01f * rotationSpeed;
         m_CameraVerticalAngle = Mathf.Clamp(m_CameraVerticalAngle, -maxVerticalAngle, maxVerticalAngle);
 
         // Set the Camera its local X angle
