@@ -203,7 +203,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_PlayerMovementScript: {fileID: 3775957555692024272}
-  m_PlayerFiringScript: {fileID: 6843243882445671679}
+  m_BaseWeaponScript: {fileID: 8603358999399586492}
   m_PlayerAimScript: {fileID: 7764714142561630722}
 --- !u!1 &8221032489111194845
 GameObject:
@@ -311,6 +311,54 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 2289199030695212513}
     m_Modifications:
+    - target: {fileID: 88568845564733212, guid: 26cdf7b2eb6cd2c459e0e994e9f08b6c, type: 3}
+      propertyPath: m_BulletPrefab
+      value: 
+      objectReference: {fileID: 8389657555116668965, guid: 36d1a667bad334a49aa97dade07d05a1, type: 3}
+    - target: {fileID: 88568845564733212, guid: 26cdf7b2eb6cd2c459e0e994e9f08b6c, type: 3}
+      propertyPath: m_BulletSpawnPoint
+      value: 
+      objectReference: {fileID: 6745265697644286590}
+    - target: {fileID: 2352074032358130686, guid: 26cdf7b2eb6cd2c459e0e994e9f08b6c, type: 3}
+      propertyPath: m_ClipSize
+      value: 12
+      objectReference: {fileID: 0}
+    - target: {fileID: 2352074032358130686, guid: 26cdf7b2eb6cd2c459e0e994e9f08b6c, type: 3}
+      propertyPath: m_FireRate
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2352074032358130686, guid: 26cdf7b2eb6cd2c459e0e994e9f08b6c, type: 3}
+      propertyPath: m_BulletPrefab
+      value: 
+      objectReference: {fileID: 8389657555116668965, guid: 36d1a667bad334a49aa97dade07d05a1, type: 3}
+    - target: {fileID: 2352074032358130686, guid: 26cdf7b2eb6cd2c459e0e994e9f08b6c, type: 3}
+      propertyPath: m_BulletSpawnPoint
+      value: 
+      objectReference: {fileID: 6745265697644286590}
+    - target: {fileID: 4406740827885731982, guid: 26cdf7b2eb6cd2c459e0e994e9f08b6c, type: 3}
+      propertyPath: m_BulletPrefab
+      value: 
+      objectReference: {fileID: 8389657555116668965, guid: 36d1a667bad334a49aa97dade07d05a1, type: 3}
+    - target: {fileID: 4406740827885731982, guid: 26cdf7b2eb6cd2c459e0e994e9f08b6c, type: 3}
+      propertyPath: m_BulletSpawnPoint
+      value: 
+      objectReference: {fileID: 6745265697644286590}
+    - target: {fileID: 4875671093178942589, guid: 26cdf7b2eb6cd2c459e0e994e9f08b6c, type: 3}
+      propertyPath: m_ClipSize
+      value: 12
+      objectReference: {fileID: 0}
+    - target: {fileID: 4875671093178942589, guid: 26cdf7b2eb6cd2c459e0e994e9f08b6c, type: 3}
+      propertyPath: m_FireRate
+      value: 4.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 4875671093178942589, guid: 26cdf7b2eb6cd2c459e0e994e9f08b6c, type: 3}
+      propertyPath: m_BulletPrefab
+      value: 
+      objectReference: {fileID: 8389657555116668965, guid: 36d1a667bad334a49aa97dade07d05a1, type: 3}
+    - target: {fileID: 4875671093178942589, guid: 26cdf7b2eb6cd2c459e0e994e9f08b6c, type: 3}
+      propertyPath: m_BulletSpawnPoint
+      value: 
+      objectReference: {fileID: 6745265697644286590}
     - target: {fileID: 5940629824643948505, guid: 26cdf7b2eb6cd2c459e0e994e9f08b6c, type: 3}
       propertyPath: m_RootOrder
       value: 0
@@ -367,10 +415,6 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 7652898237162394174, guid: 26cdf7b2eb6cd2c459e0e994e9f08b6c, type: 3}
-      propertyPath: m_BulletSpawnPoint
-      value: 
-      objectReference: {fileID: 6745265697644286590}
     - target: {fileID: 8501721771255219036, guid: 26cdf7b2eb6cd2c459e0e994e9f08b6c, type: 3}
       propertyPath: m_Name
       value: Gun
@@ -382,14 +426,14 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 5940629824643948505, guid: 26cdf7b2eb6cd2c459e0e994e9f08b6c, type: 3}
   m_PrefabInstance: {fileID: 3804583373583490753}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &6843243882445671679 stripped
+--- !u!114 &8603358999399586492 stripped
 MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 7652898237162394174, guid: 26cdf7b2eb6cd2c459e0e994e9f08b6c, type: 3}
+  m_CorrespondingSourceObject: {fileID: 4875671093178942589, guid: 26cdf7b2eb6cd2c459e0e994e9f08b6c, type: 3}
   m_PrefabInstance: {fileID: 3804583373583490753}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 176439c382ab57742842c6defec6cabc, type: 3}
+  m_Script: {fileID: 11500000, guid: 856f66fd85e1bf14f84cec887f49c2e0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 

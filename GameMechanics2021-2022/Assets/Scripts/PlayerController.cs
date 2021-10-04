@@ -5,7 +5,7 @@ using UnityEngine;
 public class PlayerController : MonoBehaviour
 {
     [SerializeField] private PlayerMovement m_PlayerMovementScript;
-    [SerializeField] private PlayerFiring m_PlayerFiringScript;
+    [SerializeField] private BaseWeapon m_BaseWeaponScript;
     [SerializeField] private PlayerAim m_PlayerAimScript;
 
     private string m_HorizontalKeyboardAxis = "KeyboardHorizontal";
@@ -30,9 +30,9 @@ public class PlayerController : MonoBehaviour
 
     private void HandlePlayerFiringInput()
     {
-        if (!m_PlayerFiringScript.m_HasFired)
+        if (!m_BaseWeaponScript.m_HasShotBullet)
             if (Input.GetAxisRaw(m_PlayerFiringAxis) > 0f)
-                m_PlayerFiringScript.m_HasFired = true;
+                m_BaseWeaponScript.m_HasShotBullet = true;
     }
 
     private void HandlePlayerAimInput()

@@ -14,23 +14,20 @@ public class BulletMovement : MonoBehaviour
         get => m_Velocity;
         set
         {
-            if (value.sqrMagnitude <= 1f)
-                m_Velocity = value;
-            else
-                m_Velocity = value.normalized;
+            m_Velocity = value.sqrMagnitude <= 1f ? value : value.normalized;
         }
     }
 
     // Start is called before the first frame update
-    void Start()
+    void Awake()
     {
         m_Rigidbody = gameObject.GetComponent<Rigidbody>();
     }
 
     private void OnCollisionEnter(Collision collision)
     {
-        if (collision.gameObject.tag != "Bullet")
-            Destroy(gameObject.transform.parent.gameObject);
+        if (!collision.gameObject.tag.Equals("Bullet"))
+            Destroy(gameObject);
     }
 
     void FixedUpdate()

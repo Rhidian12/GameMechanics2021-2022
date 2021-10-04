@@ -11,7 +11,6 @@ GameObject:
   - component: {fileID: 2786292058887011799}
   - component: {fileID: 7491194164930463915}
   - component: {fileID: 6439378351209039751}
-  - component: {fileID: 7652898237162394174}
   m_Layer: 0
   m_Name: GunBody
   m_TagString: Untagged
@@ -82,20 +81,6 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!114 &7652898237162394174
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 685272019892626662}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 176439c382ab57742842c6defec6cabc, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_BulletSpawnPoint: {fileID: 0}
-  m_BulletPrefab: {fileID: 8389657555116668965, guid: 36d1a667bad334a49aa97dade07d05a1, type: 3}
 --- !u!1 &8501721771255219036
 GameObject:
   m_ObjectHideFlags: 0
@@ -105,6 +90,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 5940629824643948505}
+  - component: {fileID: 4875671093178942589}
   m_Layer: 0
   m_Name: Gun
   m_TagString: Untagged
@@ -127,3 +113,20 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &4875671093178942589
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8501721771255219036}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 856f66fd85e1bf14f84cec887f49c2e0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_HasShotBullet: 0
+  m_BulletSpawnPoint: {fileID: 0}
+  m_BulletPrefab: {fileID: 0}
+  m_FireRate: 0
+  m_ClipSize: 0
