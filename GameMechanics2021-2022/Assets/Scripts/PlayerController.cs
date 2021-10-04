@@ -30,16 +30,9 @@ public class PlayerController : MonoBehaviour
 
     private void HandlePlayerFiringInput()
     {
-        if (m_PlayerFiringScript.m_HasFired)
-        {
-            if (Input.GetAxisRaw(m_PlayerFiringAxis) < 1f)
-                m_PlayerFiringScript.m_HasFired = false;
-        }
-        else
-        {
+        if (!m_PlayerFiringScript.m_HasFired)
             if (Input.GetAxisRaw(m_PlayerFiringAxis) > 0f)
-                m_PlayerFiringScript.m_HasFired = Input.GetAxisRaw(m_PlayerFiringAxis) > 0f ? true : false;
-        }
+                m_PlayerFiringScript.m_HasFired = true;
     }
 
     private void HandlePlayerAimInput()
