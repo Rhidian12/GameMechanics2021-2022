@@ -4,12 +4,21 @@ using UnityEngine;
 
 public class PlayerAim : MonoBehaviour
 {
-    public Vector2 m_CurrentRotation;
 
     [SerializeField] private Camera m_Camera;
 
     private float m_CameraVerticalAngle = 0f;
     private Transform m_PlayerTransform;
+    private Vector2 m_CurrentRotation;
+
+    public Vector2 CurrentRotation
+    {
+        get => m_CurrentRotation;
+        set
+        {
+            m_CurrentRotation = value.sqrMagnitude <= 1f ? value : throw new UnityException();
+        }
+    }
 
     private void Awake()
     {

@@ -37,6 +37,6 @@ public class PlayerController : MonoBehaviour
 
     private void HandlePlayerAimInput()
     {
-        m_PlayerAimScript.m_CurrentRotation = new Vector2(Input.GetAxisRaw(m_MouseX), Input.GetAxisRaw(m_MouseY));
+        m_PlayerAimScript.CurrentRotation = new Vector2(Input.GetAxisRaw(m_MouseX), Input.GetAxisRaw(m_MouseY));
     }
 }
