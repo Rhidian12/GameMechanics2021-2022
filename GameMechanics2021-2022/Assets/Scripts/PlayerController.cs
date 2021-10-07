@@ -7,12 +7,14 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private PlayerMovement m_PlayerMovementScript;
     [SerializeField] private BaseWeapon m_BaseWeaponScript;
     [SerializeField] private PlayerAim m_PlayerAimScript;
+    [SerializeField] private InfraredScanner m_InfraredScannerScript;
 
     private string m_HorizontalKeyboardAxis = "KeyboardHorizontal";
     private string m_VerticalKeyboardAxis = "KeyboardVertical";
     private string m_PlayerFiringAxis = "Firing";
     private string m_MouseX = "MouseX";
     private string m_MouseY = "MouseY";
+    private string m_InfraredScanner = "Scanning";
 
     // Update is called once per frame
     void Update()
@@ -38,5 +40,11 @@ public class PlayerController : MonoBehaviour
     private void HandlePlayerAimInput()
     {
         m_PlayerAimScript.CurrentRotation = new Vector2(Input.GetAxisRaw(m_MouseX), Input.GetAxisRaw(m_MouseY));
+    }
+
+    private void HandleInfraredScannerInput()
+    {
+        if (Input.GetAxisRaw(m_InfraredScanner) > 0f)
+            m_InfraredScannerScript.ScanAhead();
     }
 }

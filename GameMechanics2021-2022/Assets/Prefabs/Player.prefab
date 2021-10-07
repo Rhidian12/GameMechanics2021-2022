@@ -43,7 +43,7 @@ GameObject:
   - component: {fileID: 1280682350137924618}
   m_Layer: 0
   m_Name: PlayerVisuals
-  m_TagString: Untagged
+  m_TagString: Visuals
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -205,6 +205,7 @@ MonoBehaviour:
   m_PlayerMovementScript: {fileID: 3775957555692024272}
   m_BaseWeaponScript: {fileID: 8603358999399586492}
   m_PlayerAimScript: {fileID: 7764714142561630722}
+  m_InfraredScannerScript: {fileID: 0}
 --- !u!1 &8221032489111194845
 GameObject:
   m_ObjectHideFlags: 0
@@ -302,7 +303,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 418bccc909b42ca46b1f44ee10068704, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_CurrentRotation: {x: 0, y: 0}
   m_Camera: {fileID: 133244409649858583}
 --- !u!1001 &3804583373583490753
 PrefabInstance:
