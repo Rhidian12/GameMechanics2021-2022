@@ -6,6 +6,7 @@ using UnityEngine.Assertions;
 public class InfraredScanner : MonoBehaviour
 {
     [SerializeField] private GameObject m_Player;
+    [SerializeField] private Transform m_InfraredSocket;
     [SerializeField] private Material m_MaterialToApply;
     [SerializeField] private float m_ScanRange = 0f;
     [SerializeField] private float m_ScanAngle = 0f;
@@ -21,25 +22,31 @@ public class InfraredScanner : MonoBehaviour
         {
             currentTimeRevealed = 0f;
             originalMaterial = null;
+            meshRenderer = null;
 
             // Is the object the one with the visuals?
             if (gameObject.CompareTag("Visuals"))
-                originalMaterial = gameObject.GetComponent<MeshRenderer>().material;
+            {
+                meshRenderer = gameObject.GetComponent<MeshRenderer>();
+                originalMaterial = meshRenderer.material;
+            }
             // Search for the Visuals
             else
+            {
                 foreach (Transform child in gameObject.GetComponentsInChildren<Transform>())
+                {
                     if (child.gameObject.CompareTag("Visuals"))
-                        originalMaterial = child.gameObject.GetComponent<MeshRenderer>().material;
-        }
-
-        public RevealedObjectInformation(Material material)
-        {
-            currentTimeRevealed = 0f;
-            originalMaterial = material;
+                    {
+                        meshRenderer = gameObject.GetComponent<MeshRenderer>();
+                        originalMaterial = meshRenderer.material;
+                    }
+                }
+            }
         }
 
         public float currentTimeRevealed { get; set; }
-        public Material originalMaterial { get; set; } 
+        public Material originalMaterial { get; set; }
+        public MeshRenderer meshRenderer { get; set; }
     }
 
     private Dictionary<GameObject, RevealedObjectInformation> m_RevealedObjects = new Dictionary<GameObject, RevealedObjectInformation>();
@@ -56,24 +63,38 @@ public class InfraredScanner : MonoBehaviour
         if (m_CooldownTimer >= 0f)
             m_CooldownTimer -= Time.deltaTime;
 
+        List<GameObject> objectsToBeUnrevealed = new List<GameObject>();
+
         foreach(KeyValuePair<GameObject, RevealedObjectInformation> element in m_RevealedObjects)
         {
-            m_RevealedObjects[element.Key].currentTimeRevealed += Time.deltaTime;
+            // I wish this were C++ instead of C#
+            // stop trying to help me C#
+            // let me shoot myself in the fucking foot dumbass language
+            RevealedObjectInformation temp = element.Value;
+            temp.currentTimeRevealed += Time.deltaTime;
+            m_RevealedObjects[element.Key] = temp;
 
-            if (element.Value.currentTimeRevealed >= m_TimeToRevealObject)
+            if (temp.currentTimeRevealed >= m_TimeToRevealObject)
             {
-
+                element.Value.meshRenderer.material = element.Value.originalMaterial;
+                objectsToBeUnrevealed.Add(element.Key);
             }
         }
+
+        foreach(GameObject key in objectsToBeUnrevealed)
+            m_RevealedObjects.Remove(key);
     }
 
     private void OnTriggerEnter(Collider other)
     {
+        if (m_IsPickedUp)
+            return;
+
         if (other.CompareTag("Player"))
         {
             m_IsPickedUp = true;
 
-            // TODO: Add infra red scanner to player
+            transform.parent = m_InfraredSocket;
         }
     }
 
@@ -86,6 +107,12 @@ public class InfraredScanner : MonoBehaviour
         // Is the InfraredScanner on cooldown?
         if (m_CooldownTimer >= 0f)
             return;
+
+        // print a debug string
+        Debug.Log("SCANNING");
+
+        // Set the m_CooldownTimer
+        m_CooldownTimer = m_Cooldown;
 
         // Get the direction to scan
         Vector3 direction = m_Player.transform.forward;

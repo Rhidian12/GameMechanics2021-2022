@@ -22,6 +22,7 @@ public class PlayerController : MonoBehaviour
         HandlePlayerMovementInput();
         HandlePlayerFiringInput();
         HandlePlayerAimInput();
+        HandleInfraredScannerInput();
     }
 
     private void HandlePlayerMovementInput()

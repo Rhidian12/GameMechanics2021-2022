@@ -16,7 +16,7 @@ public class PlayerAim : MonoBehaviour
         get => m_CurrentRotation;
         set
         {
-            m_CurrentRotation = value.sqrMagnitude <= 1f ? value : throw new UnityException();
+            m_CurrentRotation = value;
         }
     }
 

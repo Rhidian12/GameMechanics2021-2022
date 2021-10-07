@@ -10,6 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4846957472671964972}
   - component: {fileID: 4164768705174096894}
+  - component: {fileID: 7149333764541737795}
   m_Layer: 0
   m_Name: InfraredScanner
   m_TagString: Untagged
@@ -45,6 +46,25 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 1, y: 1.1453571, z: 1}
   m_Center: {x: 0, y: 0.072678715, z: 0}
+--- !u!114 &7149333764541737795
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 780906588194666634}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9942d02f89743b2478c93c9bff776783, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Player: {fileID: 0}
+  m_InfraredSocket: {fileID: 0}
+  m_MaterialToApply: {fileID: 0}
+  m_ScanRange: 0
+  m_ScanAngle: 0
+  m_TimeToRevealObject: 0
+  m_Cooldown: 0
 --- !u!1 &8468568032878530912
 GameObject:
   m_ObjectHideFlags: 0
