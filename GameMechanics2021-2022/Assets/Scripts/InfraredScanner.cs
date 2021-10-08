@@ -65,7 +65,7 @@ public class InfraredScanner : MonoBehaviour
 
         List<GameObject> objectsToBeUnrevealed = new List<GameObject>();
 
-        foreach(KeyValuePair<GameObject, RevealedObjectInformation> element in m_RevealedObjects)
+        foreach (KeyValuePair<GameObject, RevealedObjectInformation> element in m_RevealedObjects)
         {
             // I wish this were C++ instead of C#
             // stop trying to help me C#
@@ -81,7 +81,7 @@ public class InfraredScanner : MonoBehaviour
             }
         }
 
-        foreach(GameObject key in objectsToBeUnrevealed)
+        foreach (GameObject key in objectsToBeUnrevealed)
             m_RevealedObjects.Remove(key);
     }
 
@@ -96,19 +96,12 @@ public class InfraredScanner : MonoBehaviour
         {
             m_IsPickedUp = true;
 
-            foreach (Transform transform in other.transform.GetComponentInChildren<Transform>())
-            {
-                // Find the infrared socket
-                if (transform.name.Equals("InfraredSocket"))
-                {
-                    m_InfraredSocket = transform;
-                    break;
-                }
-            }
+            bool isRecursionDone = false;
+            RecursivelySearchGameObject(other.gameObject, "InfraredSocket", ref isRecursionDone);
 
             // Make sure we have the player
             m_Player = other.gameObject;
-            
+
             // parent the scanner to the infrared socket
             transform.parent = m_InfraredSocket;
 
@@ -140,14 +133,15 @@ public class InfraredScanner : MonoBehaviour
         const int layerMask = 2;
 
         // Now that we have our scan field, we need to "reveal" everything there by giving it a red hue
-        for (float i = -m_ScanAngle; i <= m_ScanAngle; i += (m_ScanAngle / 20f)) // increase the angle by 5%
+        for (float i = -m_ScanAngle; i <= m_ScanAngle; i += (1f)) // increase the angle by 5%
         {
             // Keep a list of layers we found
             Dictionary<int, GameObject> foundLayers = new Dictionary<int, GameObject>();
 
             RaycastHit raycastHit;
+            Vector3 raycastDirection = Quaternion.AngleAxis(-i, Vector3.up) * direction;
             // Send a ray at an angle of i ([-m_ScanAngle, m_ScanAngle]), if we hit something we need to apply our red material to it for m_TimeRevealed seconds
-            while (Physics.Raycast(m_Player.transform.position, Quaternion.AngleAxis(-i, Vector3.up) * direction, out raycastHit, m_ScanRange, layerMask))
+            while (Physics.Raycast(m_Player.transform.position, raycastDirection, out raycastHit, m_ScanRange, layerMask))
             {
                 if (raycastHit.rigidbody) // there is a rigidbody
                 {
@@ -182,6 +176,40 @@ public class InfraredScanner : MonoBehaviour
                 foreach (Transform child in element.Key.GetComponentsInChildren<Transform>())
                     if (child.gameObject.CompareTag("Visuals"))
                         child.gameObject.GetComponent<MeshRenderer>().material = m_MaterialToApply;
+        }
+    }
+
+    private void RecursivelySearchGameObject(GameObject gameObject, string objectName, ref bool isRecursionDone)
+    {
+        if (isRecursionDone)
+            return;
+
+        if (gameObject.name.Equals(objectName))
+        {
+            m_InfraredSocket = gameObject.transform;
+            isRecursionDone = true;
+            return;
+        }
+
+        foreach (Transform transform in gameObject.transform.GetComponentInChildren<Transform>())
+        {
+            if (isRecursionDone)
+                return;
+
+            // Is this the infrared socket?
+            if (transform.name.Equals(objectName))
+            {
+                m_InfraredSocket = transform;
+                return;
+            }
+
+            foreach (Transform child in transform.GetComponentInChildren<Transform>())
+            {
+                if (isRecursionDone)
+                    return;
+
+                RecursivelySearchGameObject(child.gameObject, objectName, ref isRecursionDone);
+            }
         }
     }
 }

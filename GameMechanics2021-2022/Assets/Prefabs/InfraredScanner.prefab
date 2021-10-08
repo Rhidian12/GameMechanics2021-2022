@@ -59,7 +59,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_MaterialToApply: {fileID: 2100000, guid: 837ba99fb5525644887020e2114db2fe, type: 2}
-  m_ScanRange: 10
+  m_ScanRange: 100
   m_ScanAngle: 45
   m_TimeToRevealObject: 5
   m_Cooldown: 5
