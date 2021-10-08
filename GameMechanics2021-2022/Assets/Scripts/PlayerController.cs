@@ -7,7 +7,8 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private PlayerMovement m_PlayerMovementScript;
     [SerializeField] private BaseWeapon m_BaseWeaponScript;
     [SerializeField] private PlayerAim m_PlayerAimScript;
-    [SerializeField] private InfraredScanner m_InfraredScannerScript;
+
+    private InfraredScanner m_InfraredScannerScript;
 
     private string m_HorizontalKeyboardAxis = "KeyboardHorizontal";
     private string m_VerticalKeyboardAxis = "KeyboardVertical";
@@ -15,6 +16,14 @@ public class PlayerController : MonoBehaviour
     private string m_MouseX = "MouseX";
     private string m_MouseY = "MouseY";
     private string m_InfraredScanner = "Scanning";
+
+    public InfraredScanner SetInfraredScannerScript
+    {
+        set
+        {
+            m_InfraredScannerScript = value;
+        }
+    }
 
     // Update is called once per frame
     void Update()

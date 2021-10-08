@@ -5,14 +5,14 @@ using UnityEngine.Assertions;
 
 public class InfraredScanner : MonoBehaviour
 {
-    [SerializeField] private GameObject m_Player;
-    [SerializeField] private Transform m_InfraredSocket;
     [SerializeField] private Material m_MaterialToApply;
     [SerializeField] private float m_ScanRange = 0f;
     [SerializeField] private float m_ScanAngle = 0f;
     [SerializeField] private float m_TimeToRevealObject = 0f;
     [SerializeField] private float m_Cooldown = 0f;
 
+    private GameObject m_Player;
+    private Transform m_InfraredSocket;
     private bool m_IsPickedUp = false;
     private float m_CooldownTimer = 0f;
 
@@ -87,14 +87,33 @@ public class InfraredScanner : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
+        // if we have picked the scanner up, ignore this function
         if (m_IsPickedUp)
             return;
 
-        if (other.CompareTag("Player"))
+        // is the player trying to pick the scanner up?
+        if (other.CompareTag("Player")) // Player Tag should be the root
         {
             m_IsPickedUp = true;
 
+            foreach (Transform transform in other.transform.GetComponentInChildren<Transform>())
+            {
+                // Find the infrared socket
+                if (transform.name.Equals("InfraredSocket"))
+                {
+                    m_InfraredSocket = transform;
+                    break;
+                }
+            }
+
+            // Make sure we have the player
+            m_Player = other.gameObject;
+            
+            // parent the scanner to the infrared socket
             transform.parent = m_InfraredSocket;
+
+            // Set this script in the PlayerController as the infrared scanner script
+            m_Player.GetComponent<PlayerController>().SetInfraredScannerScript = this;
         }
     }
 

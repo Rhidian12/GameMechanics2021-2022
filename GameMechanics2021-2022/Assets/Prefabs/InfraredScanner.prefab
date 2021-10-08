@@ -60,11 +60,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_Player: {fileID: 0}
   m_InfraredSocket: {fileID: 0}
-  m_MaterialToApply: {fileID: 0}
-  m_ScanRange: 0
-  m_ScanAngle: 0
-  m_TimeToRevealObject: 0
-  m_Cooldown: 0
+  m_MaterialToApply: {fileID: 2100000, guid: 837ba99fb5525644887020e2114db2fe, type: 2}
+  m_ScanRange: 10
+  m_ScanAngle: 45
+  m_TimeToRevealObject: 5
+  m_Cooldown: 5
 --- !u!1 &8468568032878530912
 GameObject:
   m_ObjectHideFlags: 0
