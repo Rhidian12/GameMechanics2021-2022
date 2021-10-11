@@ -39,6 +39,30 @@ public class InfraredScanner : MonoBehaviour
                     {
                         meshRenderer = child.GetComponent<MeshRenderer>();
                         originalMaterial = meshRenderer.material;
+                        break;
+                    }
+                }
+            }
+        }
+
+        public RevealedObjectInformation(GameObject gameObject, Material _originalMaterial, float time)
+        {
+            currentTimeRevealed = time;
+            originalMaterial = _originalMaterial;
+            meshRenderer = null;
+
+            // Is the object the one with the visuals?
+            if (gameObject.CompareTag("Visuals"))
+                meshRenderer = gameObject.GetComponent<MeshRenderer>();
+            // Search for the Visuals
+            else
+            {
+                foreach (Transform child in gameObject.GetComponentsInChildren<Transform>())
+                {
+                    if (child.gameObject.CompareTag("Visuals"))
+                    {
+                        meshRenderer = child.GetComponent<MeshRenderer>();
+                        break;
                     }
                 }
             }
@@ -100,14 +124,18 @@ public class InfraredScanner : MonoBehaviour
     void Update()
     {
         if (m_CooldownTimer >= 0f)
+        {
             m_CooldownTimer -= Time.deltaTime;
+            if (m_CooldownTimer <= 0f)
+                Debug.Log("SCAN READY");
+        }
 
         Dictionary<GameObject, RevealedObjectInformation> valuesToAdjust = new Dictionary<GameObject, RevealedObjectInformation>();
         List<GameObject> objectsToBeUnrevealed = new List<GameObject>();
 
         foreach (KeyValuePair<GameObject, RevealedObjectInformation> element in m_RevealedObjects)
         {
-            valuesToAdjust[element.Key] = new RevealedObjectInformation(element.Value.meshRenderer.gameObject, element.Value.currentTimeRevealed + Time.deltaTime);
+            valuesToAdjust[element.Key] = new RevealedObjectInformation(element.Value.meshRenderer.gameObject, element.Value.originalMaterial, element.Value.currentTimeRevealed + Time.deltaTime);
 
             if (valuesToAdjust[element.Key].currentTimeRevealed >= m_TimeToRevealObject)
             {
@@ -120,6 +148,7 @@ public class InfraredScanner : MonoBehaviour
         {
             m_RevealedObjects[key].meshRenderer.material = m_RevealedObjects[key].originalMaterial;
             m_RevealedObjects.Remove(key);
+            valuesToAdjust.Remove(key);
         }
 
         foreach(KeyValuePair<GameObject, RevealedObjectInformation> element in valuesToAdjust)
