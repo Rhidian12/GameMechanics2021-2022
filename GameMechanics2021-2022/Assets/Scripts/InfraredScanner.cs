@@ -37,16 +37,55 @@ public class InfraredScanner : MonoBehaviour
                 {
                     if (child.gameObject.CompareTag("Visuals"))
                     {
-                        meshRenderer = gameObject.GetComponent<MeshRenderer>();
+                        meshRenderer = child.GetComponent<MeshRenderer>();
                         originalMaterial = meshRenderer.material;
                     }
                 }
             }
         }
 
+        public RevealedObjectInformation(GameObject gameObject, float time)
+        {
+            currentTimeRevealed = time;
+            originalMaterial = null;
+            meshRenderer = null;
+
+            // Is the object the one with the visuals?
+            if (gameObject.CompareTag("Visuals"))
+            {
+                meshRenderer = gameObject.GetComponent<MeshRenderer>();
+                originalMaterial = meshRenderer.material;
+            }
+            // Search for the Visuals
+            else
+            {
+                foreach (Transform child in gameObject.GetComponentsInChildren<Transform>())
+                {
+                    if (child.gameObject.CompareTag("Visuals"))
+                    {
+                        meshRenderer = child.GetComponent<MeshRenderer>();
+                        originalMaterial = meshRenderer.material;
+                    }
+                }
+            }
+        }
+
+
         public float currentTimeRevealed { get; set; }
         public Material originalMaterial { get; set; }
         public MeshRenderer meshRenderer { get; set; }
+    }
+
+    private struct GameObjectLayerInformation
+    {
+        public GameObjectLayerInformation(GameObject _gameObject, int _layer)
+        {
+            gameObject = _gameObject;
+            originalLayer = _layer;
+        }
+
+        public GameObject gameObject { get; set; }
+        public int originalLayer { get; set; }
     }
 
     private Dictionary<GameObject, RevealedObjectInformation> m_RevealedObjects = new Dictionary<GameObject, RevealedObjectInformation>();
@@ -63,18 +102,14 @@ public class InfraredScanner : MonoBehaviour
         if (m_CooldownTimer >= 0f)
             m_CooldownTimer -= Time.deltaTime;
 
+        Dictionary<GameObject, RevealedObjectInformation> valuesToAdjust = new Dictionary<GameObject, RevealedObjectInformation>();
         List<GameObject> objectsToBeUnrevealed = new List<GameObject>();
 
         foreach (KeyValuePair<GameObject, RevealedObjectInformation> element in m_RevealedObjects)
         {
-            // I wish this were C++ instead of C#
-            // stop trying to help me C#
-            // let me shoot myself in the fucking foot dumbass language
-            RevealedObjectInformation temp = element.Value;
-            temp.currentTimeRevealed += Time.deltaTime;
-            m_RevealedObjects[element.Key] = temp;
+            valuesToAdjust[element.Key] = new RevealedObjectInformation(element.Value.meshRenderer.gameObject, element.Value.currentTimeRevealed + Time.deltaTime);
 
-            if (temp.currentTimeRevealed >= m_TimeToRevealObject)
+            if (valuesToAdjust[element.Key].currentTimeRevealed >= m_TimeToRevealObject)
             {
                 element.Value.meshRenderer.material = element.Value.originalMaterial;
                 objectsToBeUnrevealed.Add(element.Key);
@@ -82,7 +117,13 @@ public class InfraredScanner : MonoBehaviour
         }
 
         foreach (GameObject key in objectsToBeUnrevealed)
+        {
+            m_RevealedObjects[key].meshRenderer.material = m_RevealedObjects[key].originalMaterial;
             m_RevealedObjects.Remove(key);
+        }
+
+        foreach(KeyValuePair<GameObject, RevealedObjectInformation> element in valuesToAdjust)
+            m_RevealedObjects[element.Key] = element.Value;
     }
 
     private void OnTriggerEnter(Collider other)
@@ -107,6 +148,8 @@ public class InfraredScanner : MonoBehaviour
 
             // Set this script in the PlayerController as the infrared scanner script
             m_Player.GetComponent<PlayerController>().SetInfraredScannerScript = this;
+
+            transform.position = m_InfraredSocket.position;
         }
     }
 
@@ -130,53 +173,73 @@ public class InfraredScanner : MonoBehaviour
         Vector3 direction = m_Player.transform.forward;
 
         // We want to ignore layer 2, which is the RaycastIgnore layer
-        const int layerMask = 2;
+        const int layerMask = ~(1 << 2);
 
         // Now that we have our scan field, we need to "reveal" everything there by giving it a red hue
-        for (float i = -m_ScanAngle; i <= m_ScanAngle; i += (1f)) // increase the angle by 5%
+        for (float i = -m_ScanAngle; i <= m_ScanAngle; i += 1f) // increase the angle by 5%
         {
             // Keep a list of layers we found
-            Dictionary<int, GameObject> foundLayers = new Dictionary<int, GameObject>();
+            List<GameObjectLayerInformation> foundLayers = new List<GameObjectLayerInformation>();
 
             RaycastHit raycastHit;
             Vector3 raycastDirection = Quaternion.AngleAxis(-i, Vector3.up) * direction;
             // Send a ray at an angle of i ([-m_ScanAngle, m_ScanAngle]), if we hit something we need to apply our red material to it for m_TimeRevealed seconds
             while (Physics.Raycast(m_Player.transform.position, raycastDirection, out raycastHit, m_ScanRange, layerMask))
             {
-                if (raycastHit.rigidbody) // there is a rigidbody
-                {
-                    GameObject gameObject = raycastHit.rigidbody.gameObject;
+                GameObject gameObject = raycastHit.transform.gameObject;
 
-                    // Save the original gameObject Layer, and set the hit gameObject layer to the layerMask. Thus it will get ignored on the next pass
-                    foundLayers.Add(gameObject.layer, gameObject);
-                    gameObject.layer = layerMask;
-                }
+                // Save the original gameObject Layer, and set the hit gameObject layer to the layerMask. Thus it will get ignored on the next pass
+                foundLayers.Add(new GameObjectLayerInformation(gameObject, gameObject.layer));
+                gameObject.layer = 2;
+
                 // now redo the raycast to see if there's something behind the object we just hit
             }
 
             // Did we hit something?
             if (foundLayers.Count > 0)
             {
-                foreach (KeyValuePair<int, GameObject> element in foundLayers)
+                foreach (GameObjectLayerInformation element in foundLayers)
                 {
-                    element.Value.layer = element.Key; // reset the gameobjects their original layer
-                    m_RevealedObjects.Add(element.Value, new RevealedObjectInformation(element.Value)); // add the gameObject to the hit gameObjects
+                    element.gameObject.layer = element.originalLayer; // reset the gameobjects their original layer
+                    if (!m_RevealedObjects.ContainsKey(element.gameObject))
+                        m_RevealedObjects.Add(element.gameObject, new RevealedObjectInformation(element.gameObject)); // add the gameObject to the hit gameObjects
                 }
             }
         }
 
+        List<GameObject> gameObjectsToRemove = new List<GameObject>();
         // For every game object hit, set their material to the Infrared_RevealedMaterial
+        // But only if their material ISN'T the Infrared_RevealedMaterial already
         foreach (KeyValuePair<GameObject, RevealedObjectInformation> element in m_RevealedObjects)
         {
             // Is the object the one with the visuals?
             if (element.Key.CompareTag("Visuals"))
-                element.Key.GetComponent<MeshRenderer>().material = m_MaterialToApply;
+            {
+                MeshRenderer meshRenderer = element.Key.GetComponent<MeshRenderer>();
+                if (!meshRenderer.material.Equals(m_MaterialToApply))
+                    meshRenderer.material = m_MaterialToApply;
+                else
+                    gameObjectsToRemove.Add(element.Key);
+            }
             // Search for the Visuals
             else
+            {
                 foreach (Transform child in element.Key.GetComponentsInChildren<Transform>())
+                {
                     if (child.gameObject.CompareTag("Visuals"))
-                        child.gameObject.GetComponent<MeshRenderer>().material = m_MaterialToApply;
+                    {
+                        MeshRenderer meshRenderer = child.gameObject.GetComponent<MeshRenderer>();
+                        if (!meshRenderer.material.Equals(m_MaterialToApply))
+                            meshRenderer.material = m_MaterialToApply;
+                        else
+                            gameObjectsToRemove.Add(element.Key);
+                    }
+                }
+            }
         }
+
+        foreach(GameObject gameObject in gameObjectsToRemove)
+            m_RevealedObjects.Remove(gameObject);
     }
 
     private void RecursivelySearchGameObject(GameObject gameObject, string objectName, ref bool isRecursionDone)

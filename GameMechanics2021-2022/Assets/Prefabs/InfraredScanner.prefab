@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 4846957472671964972}
   - component: {fileID: 4164768705174096894}
   - component: {fileID: 7149333764541737795}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: InfraredScanner
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -72,7 +72,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8370398286440572205}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: Visuals
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -107,7 +107,7 @@ GameObject:
   - component: {fileID: 865180640937108175}
   - component: {fileID: 5064747861547325557}
   - component: {fileID: 944477031949295661}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: Head
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -202,7 +202,7 @@ GameObject:
   - component: {fileID: 2386413199214969857}
   - component: {fileID: 8946760802793135387}
   - component: {fileID: 351297124801556814}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: Handle
   m_TagString: Untagged
   m_Icon: {fileID: 0}

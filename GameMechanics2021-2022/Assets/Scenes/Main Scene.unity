@@ -135,7 +135,7 @@ GameObject:
   - component: {fileID: 291398832}
   - component: {fileID: 291398831}
   - component: {fileID: 291398830}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: Wall
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -437,7 +437,7 @@ GameObject:
   - component: {fileID: 709483585}
   - component: {fileID: 709483584}
   - component: {fileID: 709483583}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: Ground
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -588,7 +588,7 @@ GameObject:
   - component: {fileID: 1096346353}
   - component: {fileID: 1096346352}
   - component: {fileID: 1096346351}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: Smoke
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -5393,7 +5393,7 @@ GameObject:
   - component: {fileID: 1324387427}
   - component: {fileID: 1324387426}
   - component: {fileID: 1324387425}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: Wall (2)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -5488,7 +5488,7 @@ GameObject:
   - component: {fileID: 1712752646}
   - component: {fileID: 1712752645}
   - component: {fileID: 1712752644}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: Wall (3)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -5617,7 +5617,7 @@ GameObject:
   - component: {fileID: 1837859917}
   - component: {fileID: 1837859916}
   - component: {fileID: 1837859915}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: Wall (1)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
